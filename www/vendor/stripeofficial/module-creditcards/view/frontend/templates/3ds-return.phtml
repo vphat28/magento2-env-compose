@@ -1,0 +1,28 @@
+<?php
+/** @var \Stripeofficial\CreditCards\Block\ViewModel $this */
+/** @var \Magento\Framework\App\RequestInterface $http */
+$http = $this->getHttp();
+
+/** @var \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig */
+$scopeConfig = $this->getScopeConfig();
+?>
+<div id="three-d-secure-loading" data-bind="scope:'three-d-secure-loading'">
+    <!-- ko template: getTemplate() --><!-- /ko -->
+    <script type="text/x-magento-init">
+        {
+            "#three-d-secure-loading": {
+                "Magento_Ui/js/core/app": {
+                   "components": {
+                        "three-d-secure-loading": {
+                            "component": "Stripeofficial_CreditCards/js/view/payment/3ds_loading",
+                            "config": {
+                                "sourceId": "<?php echo $this->escapeQuote($http->getParam('source')); ?>",
+                                "ajaxTimeoutTries": "<?php echo $this->escapeQuote($scopeConfig->getValue('payment/stripecreditcards/ajax_timeout')); ?>"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</div>

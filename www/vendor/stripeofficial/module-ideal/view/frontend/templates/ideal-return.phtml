@@ -1,0 +1,32 @@
+<?php
+
+/** @var \Magento\Framework\App\RequestInterface $http */
+$http = $block->getHttp();
+
+/** @var \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig */
+$scopeConfig = $block->getScopeConfig();
+
+$source = $block->getSource($http->getParam('source'));
+?>
+<div id="ideal-loading" data-bind="scope:'ideal-loading'">
+    <!-- ko template: getTemplate() --><!-- /ko -->
+    <script type="text/x-magento-init">
+        {
+            "#ideal-loading": {
+                "Magento_Ui/js/core/app": {
+                   "components": {
+                        "ideal-loading": {
+                            "component": "Stripeofficial_IDeal/js/view/payment/ideal_loading",
+                            "config": {
+                                "sourceId": "<?php echo $this->escapeQuote($http->getParam('source')); ?>",
+                                "ajaxTimeoutTries": "<?php echo $this->escapeQuote($scopeConfig->getValue('payment/stripeideal/ajax_timeout')); ?>",
+                                "status":"<?php echo $block->escapeQuote($source['status']); ?>"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+    </script>
+</div>

@@ -1,0 +1,181 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <!-- Payment Method Facade configuration -->
+    <virtualType name="stripesepaFacade" type="Magento\Payment\Model\Method\Adapter">
+        <arguments>
+            <argument name="code" xsi:type="const">\Stripeofficial\SEPA\Model\Ui\ConfigProvider::CODE</argument>
+            <argument name="formBlockType" xsi:type="string">Magento\Payment\Block\Form</argument>
+            <argument name="infoBlockType" xsi:type="string">Stripeofficial\SEPA\Block\Info</argument>
+            <argument name="valueHandlerPool" xsi:type="object">stripesepaValueHandlerPool</argument>
+            <argument name="commandPool" xsi:type="object">stripesepaCommandPool</argument>
+        </arguments>
+    </virtualType>
+
+    <!-- Configuration reader -->
+    <virtualType name="stripesepaConfig" type="Stripeofficial\Core\Gateway\Config\Config">
+        <arguments>
+            <argument name="methodCode" xsi:type="const">\Stripeofficial\SEPA\Model\Ui\ConfigProvider::CODE</argument>
+        </arguments>
+    </virtualType>
+
+    <type name="Stripeofficial\SEPA\Gateway\Config\Config">
+        <arguments>
+            <argument name="methodCode" xsi:type="const">Stripeofficial\SEPA\Model\Ui\ConfigProvider::CODE</argument>
+            <argument name="pathPattern" xsi:type="const">\Magento\Payment\Gateway\Config\Config::DEFAULT_PATH_PATTERN</argument>
+        </arguments>
+    </type>
+
+    <!-- Logger, initialized with stripesepaConfig -->
+    <virtualType name="stripesepaLogger" type="Magento\Payment\Model\Method\Logger">
+        <arguments>
+            <argument name="config" xsi:type="object">stripesepaConfig</argument>
+        </arguments>
+    </virtualType>
+
+    <type name="Stripeofficial\SEPA\Gateway\Http\Client\ClientMock">
+        <arguments>
+            <argument name="logger" xsi:type="object">stripesepaLogger</argument>
+        </arguments>
+    </type>
+
+    <!-- Commands infrastructure -->
+    <virtualType name="stripesepaCommandPool" type="Magento\Payment\Gateway\Command\CommandPool">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="authorize" xsi:type="string">stripesepaAuthorizeCommand</item>
+                <item name="capture" xsi:type="string">stripesepaCaptureCommand</item>
+                <item name="refund" xsi:type="string">stripesepaRefundCommand</item>
+                <item name="void" xsi:type="string">stripesepaVoidCommand</item>
+                <item name="cancel" xsi:type="string">stripesepaCancelCommand</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <!-- Void Command -->
+    <virtualType name="stripesepaVoidCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+        <arguments>
+            <argument name="requestBuilder" xsi:type="object">stripesepaVoidRequest</argument>
+            <argument name="handler" xsi:type="object">stripesepaResponseHandlerComposite</argument>
+            <argument name="transferFactory" xsi:type="object">Stripeofficial\Core\Gateway\Http\TransferFactory</argument>
+            <argument name="client" xsi:type="object">Stripeofficial\SEPA\Gateway\Http\Client\ClientMock</argument>
+        </arguments>
+    </virtualType>
+
+    <!-- Void Request -->
+    <virtualType name="stripesepaVoidRequest" type="Magento\Payment\Gateway\Request\BuilderComposite">
+        <arguments>
+            <argument name="builders" xsi:type="array">
+                <item name="void_transaction" xsi:type="string">Stripeofficial\Core\Gateway\Request\VoidRequest</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <!-- Cancel Command -->
+    <virtualType name="stripesepaCancelCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+        <arguments>
+            <argument name="requestBuilder" xsi:type="object">stripesepaCancelRequest</argument>
+            <argument name="handler" xsi:type="object">stripesepaResponseHandlerComposite</argument>
+            <argument name="transferFactory" xsi:type="object">Stripeofficial\Core\Gateway\Http\TransferFactory</argument>
+            <argument name="client" xsi:type="object">Stripeofficial\SEPA\Gateway\Http\Client\ClientMock</argument>
+        </arguments>
+    </virtualType>
+
+    <!-- Cancel Request -->
+    <virtualType name="stripesepaCancelRequest" type="Magento\Payment\Gateway\Request\BuilderComposite">
+        <arguments>
+            <argument name="builders" xsi:type="array">
+                <item name="transaction" xsi:type="string">Stripeofficial\Core\Gateway\Request\CancelRequest</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <!-- Authorize Command -->
+    <virtualType name="stripesepaAuthorizeCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+        <arguments>
+            <argument name="requestBuilder" xsi:type="object">stripesepaAuthorizationRequest</argument>
+            <argument name="handler" xsi:type="object">stripesepaResponseHandlerComposite</argument>
+            <argument name="transferFactory" xsi:type="object">Stripeofficial\Core\Gateway\Http\TransferFactory</argument>
+            <argument name="client" xsi:type="object">Stripeofficial\SEPA\Gateway\Http\Client\ClientMock</argument>
+        </arguments>
+    </virtualType>
+
+    <!-- Authorization Request -->
+    <virtualType name="stripesepaAuthorizationRequest" type="Magento\Payment\Gateway\Request\BuilderComposite">
+        <arguments>
+            <argument name="builders" xsi:type="array">
+                <item name="transaction" xsi:type="string">Stripeofficial\Core\Gateway\Request\AuthorizationRequest</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <type name="Stripeofficial\Core\Gateway\Request\AuthorizationRequest">
+        <arguments>
+            <argument name="config" xsi:type="object">stripesepaConfig</argument>
+        </arguments>
+    </type>
+
+    <!-- Capture command -->
+    <virtualType name="stripesepaCaptureCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+        <arguments>
+            <argument name="requestBuilder" xsi:type="object">Stripeofficial\Core\Gateway\Request\CaptureRequest</argument>
+            <argument name="handler" xsi:type="object">Stripeofficial\Core\Gateway\Response\TxnIdHandler</argument>
+            <argument name="transferFactory" xsi:type="object">Stripeofficial\Core\Gateway\Http\TransferFactory</argument>
+            <argument name="validator" xsi:type="object">Stripeofficial\Core\Gateway\Validator\ResponseCodeValidator</argument>
+            <argument name="client" xsi:type="object">Stripeofficial\SEPA\Gateway\Http\Client\ClientMock</argument>
+        </arguments>
+    </virtualType>
+
+    <!-- Capture Request -->
+    <type name="Stripeofficial\Core\Gateway\Request\CaptureRequest">
+        <arguments>
+            <argument name="config" xsi:type="object">stripesepaConfig</argument>
+        </arguments>
+    </type>
+
+    <!-- Refund command -->
+    <virtualType name="stripesepaRefundCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+        <arguments>
+            <argument name="requestBuilder" xsi:type="object">Stripeofficial\Core\Gateway\Request\RefundRequest</argument>
+            <argument name="handler" xsi:type="object">Stripeofficial\Core\Gateway\Response\TxnIdHandler</argument>
+            <argument name="transferFactory" xsi:type="object">Stripeofficial\Core\Gateway\Http\TransferFactory</argument>
+            <argument name="validator" xsi:type="object">Stripeofficial\Core\Gateway\Validator\ResponseCodeValidator</argument>
+            <argument name="client" xsi:type="object">Stripeofficial\SEPA\Gateway\Http\Client\ClientMock</argument>
+        </arguments>
+    </virtualType>
+
+    <!-- Refund Request -->
+    <type name="Stripeofficial\Core\Gateway\Request\RefundRequest">
+        <arguments>
+            <argument name="config" xsi:type="object">stripesepaConfig</argument>
+        </arguments>
+    </type>
+
+    <!-- Response handlers -->
+    <virtualType name="stripesepaResponseHandlerComposite" type="Magento\Payment\Gateway\Response\HandlerChain">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="txnid" xsi:type="string">Stripeofficial\Core\Gateway\Response\TxnIdHandler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <!-- Value handlers infrastructure -->
+    <virtualType name="stripesepaValueHandlerPool" type="Magento\Payment\Gateway\Config\ValueHandlerPool">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="default" xsi:type="string">stripesepaConfigValueHandler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="stripesepaConfigValueHandler" type="Magento\Payment\Gateway\Config\ConfigValueHandler">
+        <arguments>
+            <argument name="configInterface" xsi:type="object">stripesepaConfig</argument>
+        </arguments>
+    </virtualType>
+
+    <type name="Stripeofficial\SEPA\Block\Info">
+        <arguments>
+            <argument name="config" xsi:type="object">stripesepaConfig</argument>
+        </arguments>
+    </type>
+</config>

@@ -1,0 +1,165 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <!-- Payment Method Facade configuration -->
+    <type name="Stripeofficial\IDeal\Model\Adapter">
+        <arguments>
+            <argument name="code" xsi:type="string">stripeideal</argument>
+            <argument name="formBlockType" xsi:type="string">Magento\Payment\Block\Form</argument>
+            <argument name="infoBlockType" xsi:type="string">Stripeofficial\IDeal\Block\Info</argument>
+            <argument name="valueHandlerPool" xsi:type="object">stripeiDealValueHandlerPool</argument>
+            <argument name="commandPool" xsi:type="object">stripeiDealCommandPool</argument>
+        </arguments>
+    </type>
+	<virtualType name="stripeidealclientmock" type="Stripeofficial\IDeal\Gateway\Http\Client\ClientMock"/>
+    <!-- Configuration reader -->
+    <virtualType name="stripeiDealConfig" type="Magento\Payment\Gateway\Config\Config">
+        <arguments>
+            <argument name="methodCode" xsi:type="string">stripeideal</argument>
+        </arguments>
+    </virtualType>
+    <type name="Stripeofficial\IDeal\Gateway\Config\Config">
+        <arguments>
+            <argument name="methodCode" xsi:type="string">stripeideal</argument>
+            <argument name="pathPattern" xsi:type="string">Magento\Payment\Gateway\Config\Config::DEFAULT_PATH_PATTERN
+            </argument>
+        </arguments>
+    </type>
+    <!-- Logger, initialized with stripeIDealConfig -->
+    <virtualType name="stripeiDealLogger" type="Magento\Payment\Model\Method\Logger">
+        <arguments>
+            <argument name="config" xsi:type="object">stripeiDealConfig</argument>
+        </arguments>
+    </virtualType>
+    <type name="Stripeofficial\Core\Gateway\Http\Client\ClientMock">
+        <arguments>
+            <argument name="logger" xsi:type="object">stripeiDealLogger</argument>
+        </arguments>
+    </type>
+    <!-- Commands infrastructure -->
+    <virtualType name="stripeiDealCommandPool" type="Magento\Payment\Gateway\Command\CommandPool">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="authorize" xsi:type="string">stripeiDealAuthorizeCommand</item>
+                <item name="capture" xsi:type="string">stripeiDealCaptureCommand</item>
+                <item name="refund" xsi:type="string">stripeiDealRefundCommand</item>
+                <item name="void" xsi:type="string">stripeiDealVoidCommand</item>
+                <item name="cancel" xsi:type="string">stripeiDealCancelCommand</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <!-- Void Command -->
+    <virtualType name="stripeiDealVoidCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+        <arguments>
+            <argument name="requestBuilder" xsi:type="object">stripeiDealVoidRequest</argument>
+            <argument name="handler" xsi:type="object">stripeiDealResponseHandlerComposite</argument>
+            <argument name="transferFactory" xsi:type="object">Stripeofficial\Core\Gateway\Http\TransferFactory</argument>
+            <argument name="client" xsi:type="object">stripeidealclientmock</argument>
+        </arguments>
+    </virtualType>
+    <!-- Void Request -->
+    <virtualType name="stripeiDealVoidRequest" type="Magento\Payment\Gateway\Request\BuilderComposite">
+        <arguments>
+            <argument name="builders" xsi:type="array">
+                <item name="void_transaction" xsi:type="string">Stripeofficial\Core\Gateway\Request\VoidRequest</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <!-- Cancel Command -->
+    <virtualType name="stripeiDealCancelCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+        <arguments>
+            <argument name="requestBuilder" xsi:type="object">stripeiDealCancelRequest</argument>
+            <argument name="handler" xsi:type="object">stripeiDealResponseHandlerComposite</argument>
+            <argument name="transferFactory" xsi:type="object">Stripeofficial\Core\Gateway\Http\TransferFactory</argument>
+            <argument name="client" xsi:type="object">stripeidealclientmock</argument>
+        </arguments>
+    </virtualType>
+    <!-- Cancel Request -->
+    <virtualType name="stripeiDealCancelRequest" type="Magento\Payment\Gateway\Request\BuilderComposite">
+        <arguments>
+            <argument name="builders" xsi:type="array">
+                <item name="transaction" xsi:type="string">Stripeofficial\Core\Gateway\Request\CancelRequest</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <!-- Authorize Command -->
+    <virtualType name="stripeiDealAuthorizeCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+        <arguments>
+            <argument name="requestBuilder" xsi:type="object">stripeiDealAuthorizationRequest</argument>
+            <argument name="handler" xsi:type="object">stripeiDealResponseHandlerComposite</argument>
+            <argument name="transferFactory" xsi:type="object">Stripeofficial\Core\Gateway\Http\TransferFactory</argument>
+            <argument name="client" xsi:type="object">stripeidealclientmock</argument>
+        </arguments>
+    </virtualType>
+    <!-- Authorization Request -->
+    <virtualType name="stripeiDealAuthorizationRequest" type="Magento\Payment\Gateway\Request\BuilderComposite">
+        <arguments>
+            <argument name="builders" xsi:type="array">
+                <item name="transaction" xsi:type="string">Stripeofficial\Core\Gateway\Request\AuthorizationRequest</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <type name="Stripeofficial\Core\Gateway\Request\AuthorizationRequest">
+        <arguments>
+            <argument name="config" xsi:type="object">stripeiDealConfig</argument>
+        </arguments>
+    </type>
+    <!-- Capture command -->
+    <virtualType name="stripeiDealCaptureCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+        <arguments>
+            <argument name="requestBuilder" xsi:type="object">Stripeofficial\Core\Gateway\Request\CaptureRequest</argument>
+            <argument name="handler" xsi:type="object">Stripeofficial\Core\Gateway\Response\TxnIdHandler</argument>
+            <argument name="transferFactory" xsi:type="object">Stripeofficial\Core\Gateway\Http\TransferFactory</argument>
+            <argument name="client" xsi:type="object">stripeidealclientmock</argument>
+            <argument name="validator" xsi:type="object">Stripeofficial\Core\Gateway\Validator\ResponseCodeValidator</argument>
+        </arguments>
+    </virtualType>
+    <!-- Capture Request -->
+    <type name="Stripeofficial\Core\Gateway\Request\CaptureRequest">
+        <arguments>
+            <argument name="config" xsi:type="object">stripeiDealConfig</argument>
+        </arguments>
+    </type>
+    <!-- Refund command -->
+    <virtualType name="stripeiDealRefundCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+        <arguments>
+            <argument name="requestBuilder" xsi:type="object">Stripeofficial\Core\Gateway\Request\RefundRequest</argument>
+            <argument name="handler" xsi:type="object">Stripeofficial\Core\Gateway\Response\TxnIdHandler</argument>
+            <argument name="transferFactory" xsi:type="object">Stripeofficial\Core\Gateway\Http\TransferFactory</argument>
+            <argument name="validator" xsi:type="object">Stripeofficial\Core\Gateway\Validator\ResponseCodeValidator</argument>
+            <argument name="client" xsi:type="object">stripeidealclientmock</argument>
+        </arguments>
+    </virtualType>
+    <!-- Refund Request -->
+    <type name="Stripeofficial\Core\Gateway\Request\RefundRequest">
+        <arguments>
+            <argument name="config" xsi:type="object">stripeiDealConfig</argument>
+        </arguments>
+    </type>
+
+    <!-- Response handlers -->
+    <virtualType name="stripeiDealResponseHandlerComposite" type="Magento\Payment\Gateway\Response\HandlerChain">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="txnid" xsi:type="string">Stripeofficial\Core\Gateway\Response\TxnIdHandler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <!-- Value handlers infrastructure -->
+    <virtualType name="stripeiDealValueHandlerPool" type="Magento\Payment\Gateway\Config\ValueHandlerPool">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="default" xsi:type="string">stripeiDealConfigValueHandler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="stripeiDealConfigValueHandler" type="Magento\Payment\Gateway\Config\ConfigValueHandler">
+        <arguments>
+            <argument name="configInterface" xsi:type="object">stripeiDealConfig</argument>
+        </arguments>
+    </virtualType>
+    <type name="Stripeofficial\IDeal\Block\Info">
+        <arguments>
+            <argument name="config" xsi:type="object">stripeiDealConfig</argument>
+        </arguments>
+    </type>
+</config>

@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="payment">
+             <group id="stripe_section" translate="label" type="text" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">
+            <group id="stripecreditcards" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Stripe Cards (Credit and Debit)</label>
+                <frontend_model>Stripeofficial\CreditCards\Block\Adminhtml\Config\Fieldset</frontend_model>
+                <field id="active" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <config_path>payment/stripecreditcards/active</config_path>
+                    <backend_model>Stripeofficial\Core\Model\Backend\StripeValid</backend_model>
+                </field>
+                <field id="enable_3ds" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Enforce 3D Secure</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                     <config_path>payment/stripecreditcards/enable_3ds</config_path>
+                    <comment>Always enforce 3D Secure when card supports it. If no, then only use 3D Secure for cards that require it.</comment>
+                </field>
+                <field id="title" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Title</label>
+                    <config_path>payment/stripecreditcards/title</config_path>
+                </field>
+                <field id="cctypes" translate="label" type="multiselect" sortOrder="21" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Credit Card Types</label>
+                    <source_model>Stripeofficial\CreditCards\Model\Adminhtml\Source\Cctype</source_model>
+                    <config_path>payment/stripecreditcards/cctypes</config_path>
+                </field>
+                <field id="payment_action" translate="label" type="select" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Payment Action</label>
+                    <source_model>Stripeofficial\CreditCards\Model\Adminhtml\Source\PaymentAction</source_model>
+                     <config_path>payment/stripecreditcards/payment_action</config_path>
+                </field>
+                <field id="allowspecific" translate="label" type="allowspecific" sortOrder="130" showInDefault="9"
+                       showInWebsite="1" showInStore="0">
+                    <label>Payment From Applicable Countries</label>
+                    <source_model>Magento\Payment\Model\Config\Source\Allspecificcountries</source_model>
+                    <config_path>payment/stripecreditcards/allowspecific</config_path>
+                </field>
+                <field id="ajax_timeout" translate="label" type="text" sortOrder="140" showInDefault="1"
+                       showInWebsite="1" showInStore="0">
+                    <label>Ajax Timeout</label>
+                    <config_path>payment/stripecreditcards/ajax_timeout</config_path>
+                    <comment>This is used when customer return from 3ds page</comment>
+                </field>
+                <field id="specificcountry" translate="label" type="multiselect" sortOrder="140" showInDefault="1"
+                       showInWebsite="1" showInStore="0">
+                    <label>Payment From Specific Countries</label>
+                    <source_model>Magento\Directory\Model\Config\Source\Country</source_model>
+                    <config_path>payment/stripecreditcards/specificcountry</config_path>
+                </field>
+                <field id="sort_order" translate="label" type="text" sortOrder="160" showInDefault="1" showInWebsite="1"
+                       showInStore="0">
+                    <label>Sort Order</label>
+                    <config_path>payment/stripecreditcards/sort_order</config_path>
+                    <frontend_class>validate-number</frontend_class>
+                </field>
+                <field id="form_font_size" translate="label" type="text" sortOrder="160" showInDefault="1" showInWebsite="1"
+                       showInStore="0">
+                    <label>Credit Card form font size</label>
+                    <comment>Please enter CSS1 or CSS2 compatible font size value, for example: 16px or 16pt</comment>
+                </field>
+                <field id="form_font_color" translate="label" type="text" sortOrder="160" showInDefault="1" showInWebsite="1"
+                       showInStore="0">
+                    <label>Credit Card form font color</label>
+                    <comment>Please enter CSS1 or CSS2 compatible font color value, for example: red or #FF0000</comment>
+                </field>
+            </group>
+        </group>
+        </section>
+    </system>
+</config>

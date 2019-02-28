@@ -1,0 +1,85 @@
+<?php
+/** @var \Stripeofficial\Core\Block\CustomerData $block */
+$data = $block->getCheckoutData();
+?>
+<?php // @codingStandardsIgnoreLine ?><script type="text/javascript">
+    window.StripeCustomerData = <?php /* @codingStandardsIgnoreLine */ echo json_encode($data); ?>;
+
+    require([
+        'jquery',
+        'jquery/jquery.cookie'
+    ], function ($) {
+        $(document).ready(function () {
+            var trimDataFromAddress = function (address) {
+                const addressLines = address.split('\n');
+                const streetLine1 = addressLines[3].trim();
+                const localInfo = addressLines[4].split(',');
+                window.StripeCustomerData.fullname = addressLines[1].trim() + ' ' + addressLines[2].trim();
+                window.StripeCustomerData.street = streetLine1;
+                window.StripeCustomerData.city = localInfo[0].trim();
+                window.StripeCustomerData.state = localInfo[1].trim();
+                window.StripeCustomerData.country = addressLines[5].trim();
+                window.StripeCustomerData.country = window.checkoutConfig
+                    .payment['stripecore']
+                    .countries[addressLines[5].trim()];
+
+                $.cookie('StripeCustomerDataName', window.StripeCustomerData.fullname);
+                $.cookie('StripeCustomerDataStreet', window.StripeCustomerData.street);
+                $.cookie('StripeCustomerDataCity', window.StripeCustomerData.city);
+                $.cookie('StripeCustomerDataState', window.StripeCustomerData.state);
+                $.cookie('StripeCustomerDataCountry', window.StripeCustomerData.country);
+            };
+            $(document).ready(function () {
+                window.StripeCustomerData.fullname = $.cookie('StripeCustomerDataName');
+                window.StripeCustomerData.street = $.cookie('StripeCustomerDataStreet');
+                window.StripeCustomerData.city = $.cookie('StripeCustomerDataCity');
+                window.StripeCustomerData.state = $.cookie('StripeCustomerDataState');
+                window.StripeCustomerData.country = $.cookie('StripeCustomerDataCountry');
+            });
+            $(document).on('click', '#shipping-method-buttons-container .primary', function () {
+                if ($('.shipping-address-item').length > 0) {
+                    const address = $('.shipping-address-item.selected-item').text();
+                    trimDataFromAddress(address);
+                } else {
+                    if (!window.isCustomerLoggedIn) {
+                        $.cookie('StripeCustomerDataEmail', $('#customer-email').val());
+                        window.StripeCustomerData['customer_email'] = $('#customer-email').val();
+                    }
+
+                    const name = $('.form-shipping-address [name=firstname]').val() + ' ' + $('.form-shipping-address [name=lastname]').val();
+                    $.cookie('StripeCustomerDataName', name);
+                    window.StripeCustomerData['fullname'] = name;
+
+                    const street = $('.form-shipping-address .street.field input').val();
+                    $.cookie('StripeCustomerDataStreet', street);
+                    window.StripeCustomerData['street'] = street;
+
+                    const city = $('.form-shipping-address [name=city]').val();
+                    $.cookie('StripeCustomerDataCity', city);
+                    window.StripeCustomerData['city'] = city;
+
+                    const state = $('.form-shipping-address [name=region]').val() + ' ' + $('.form-shipping-address [name=postcode]').val();
+                    $.cookie('StripeCustomerDataState', state);
+                    window.StripeCustomerData['state'] = state;
+
+                    const country = $('.form-shipping-address [name=country_id]').val();
+                    $.cookie('StripeCustomerDataCountry', country);
+                    window.StripeCustomerData['country'] = country;
+                }
+            });
+            $(document).on('click', '.checkout-billing-address .action.action-update', function () {
+                {
+                    const ele = $(this);
+                    setTimeout(function() {
+                        const address = ele.parent()
+                            .parent()
+                            .parent()
+                            .parent()
+                            .find('.billing-address-details').text();
+                        trimDataFromAddress(address);
+                    }, 500);
+                }
+            })
+        });
+    })
+</script>

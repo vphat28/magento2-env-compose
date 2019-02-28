@@ -1,0 +1,430 @@
+[
+    {
+        "name": "stripe/stripe-php",
+        "version": "v6.30.2",
+        "version_normalized": "6.30.2.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/stripe/stripe-php.git",
+            "reference": "3ed30726812ac4bdd2b208c2fe3d00ef5cfe54f6"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/stripe/stripe-php/zipball/3ed30726812ac4bdd2b208c2fe3d00ef5cfe54f6",
+            "reference": "3ed30726812ac4bdd2b208c2fe3d00ef5cfe54f6",
+            "shasum": ""
+        },
+        "require": {
+            "ext-curl": "*",
+            "ext-json": "*",
+            "ext-mbstring": "*",
+            "php": ">=5.4.0"
+        },
+        "require-dev": {
+            "php-coveralls/php-coveralls": "1.*",
+            "phpunit/phpunit": "~4.0",
+            "squizlabs/php_codesniffer": "~2.0",
+            "symfony/process": "~2.8"
+        },
+        "time": "2019-02-25T18:51:15+00:00",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "2.0-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Stripe\\": "lib/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Stripe and contributors",
+                "homepage": "https://github.com/stripe/stripe-php/contributors"
+            }
+        ],
+        "description": "Stripe PHP Library",
+        "homepage": "https://stripe.com/",
+        "keywords": [
+            "api",
+            "payment processing",
+            "stripe"
+        ]
+    },
+    {
+        "name": "stripeofficial/module-alipay",
+        "version": "1.0.4",
+        "version_normalized": "1.0.4.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/vphat28/stripe-module-alipay.git",
+            "reference": "8085d3011fc0984cf59d3ee42d7bbe5c7748096a"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/vphat28/stripe-module-alipay/zipball/8085d3011fc0984cf59d3ee42d7bbe5c7748096a",
+            "reference": "8085d3011fc0984cf59d3ee42d7bbe5c7748096a",
+            "shasum": ""
+        },
+        "time": "2019-02-25T15:48:17+00:00",
+        "type": "magento2-module",
+        "installation-source": "dist",
+        "autoload": {
+            "files": [
+                "registration.php"
+            ],
+            "psr-4": {
+                "Stripeofficial\\Alipay\\": ""
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "OSL-3.0",
+            "AFL-3.0"
+        ],
+        "description": "Stripe Alipay payment method integration"
+    },
+    {
+        "name": "stripeofficial/module-bancontact",
+        "version": "1.0.4",
+        "version_normalized": "1.0.4.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/vphat28/stripe-module-bancontact.git",
+            "reference": "ef83742a6928851d2c73d5914951fd0c5216c158"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/vphat28/stripe-module-bancontact/zipball/ef83742a6928851d2c73d5914951fd0c5216c158",
+            "reference": "ef83742a6928851d2c73d5914951fd0c5216c158",
+            "shasum": ""
+        },
+        "time": "2019-02-26T00:28:43+00:00",
+        "type": "magento2-module",
+        "installation-source": "dist",
+        "autoload": {
+            "files": [
+                "registration.php"
+            ],
+            "psr-4": {
+                "Stripeofficial\\BANCONTACT\\": ""
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "OSL-3.0",
+            "AFL-3.0"
+        ],
+        "description": "Stripe BanContact payment method integration"
+    },
+    {
+        "name": "stripeofficial/module-core",
+        "version": "2.0.6",
+        "version_normalized": "2.0.6.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/vphat28/stripe-module-core.git",
+            "reference": "a552cf69f34d85a983b71a5a91f6c95ea16d377d"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/vphat28/stripe-module-core/zipball/a552cf69f34d85a983b71a5a91f6c95ea16d377d",
+            "reference": "a552cf69f34d85a983b71a5a91f6c95ea16d377d",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=7.0.0",
+            "stripe/stripe-php": ">=5.8.0"
+        },
+        "time": "2019-02-27T02:53:25+00:00",
+        "type": "magento2-module",
+        "installation-source": "dist",
+        "autoload": {
+            "files": [
+                "registration.php"
+            ],
+            "psr-4": {
+                "Stripeofficial\\Core\\": ""
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "OSL-3.0",
+            "AFL-3.0"
+        ],
+        "description": "Stripe Core payment gateway integration"
+    },
+    {
+        "name": "stripeofficial/module-creditcards",
+        "version": "1.0.12",
+        "version_normalized": "1.0.12.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/vphat28/stripe-module-creditcards.git",
+            "reference": "3ef44cedfb631d0bae04aaec2b8c93980eb587b3"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/vphat28/stripe-module-creditcards/zipball/3ef44cedfb631d0bae04aaec2b8c93980eb587b3",
+            "reference": "3ef44cedfb631d0bae04aaec2b8c93980eb587b3",
+            "shasum": ""
+        },
+        "time": "2019-02-26T00:30:18+00:00",
+        "type": "magento2-module",
+        "installation-source": "dist",
+        "autoload": {
+            "files": [
+                "registration.php"
+            ],
+            "psr-4": {
+                "Stripeofficial\\CreditCards\\": ""
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "OSL-3.0",
+            "AFL-3.0"
+        ],
+        "description": "Stripe Credit Card payment method integration"
+    },
+    {
+        "name": "stripeofficial/module-giropay",
+        "version": "1.0.4",
+        "version_normalized": "1.0.4.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/vphat28/stripe-module-giropay.git",
+            "reference": "9fb93ecbf042960becf8906de410fad5232d7622"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/vphat28/stripe-module-giropay/zipball/9fb93ecbf042960becf8906de410fad5232d7622",
+            "reference": "9fb93ecbf042960becf8906de410fad5232d7622",
+            "shasum": ""
+        },
+        "time": "2019-02-26T00:18:39+00:00",
+        "type": "magento2-module",
+        "installation-source": "dist",
+        "autoload": {
+            "files": [
+                "registration.php"
+            ],
+            "psr-4": {
+                "Stripeofficial\\GiroPay\\": ""
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "OSL-3.0",
+            "AFL-3.0"
+        ],
+        "description": "Stripe GiroPay payment method integration"
+    },
+    {
+        "name": "stripeofficial/module-ideal",
+        "version": "1.0.4",
+        "version_normalized": "1.0.4.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/vphat28/stripe-module-ideal.git",
+            "reference": "efbb6eccc0e0632d499fcd350ad2427e9d4c0a56"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/vphat28/stripe-module-ideal/zipball/efbb6eccc0e0632d499fcd350ad2427e9d4c0a56",
+            "reference": "efbb6eccc0e0632d499fcd350ad2427e9d4c0a56",
+            "shasum": ""
+        },
+        "time": "2019-02-26T00:30:56+00:00",
+        "type": "magento2-module",
+        "installation-source": "dist",
+        "autoload": {
+            "files": [
+                "registration.php"
+            ],
+            "psr-4": {
+                "Stripeofficial\\IDeal\\": ""
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "OSL-3.0",
+            "AFL-3.0"
+        ],
+        "description": "Stripe IDeal payment method integration"
+    },
+    {
+        "name": "stripeofficial/module-instant-checkout",
+        "version": "1.0.9",
+        "version_normalized": "1.0.9.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/vphat28/stripe-module-instantcheckout.git",
+            "reference": "17953db1adef45f030cd5f3ad402e3fc05893aa7"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/vphat28/stripe-module-instantcheckout/zipball/17953db1adef45f030cd5f3ad402e3fc05893aa7",
+            "reference": "17953db1adef45f030cd5f3ad402e3fc05893aa7",
+            "shasum": ""
+        },
+        "time": "2019-02-26T00:19:34+00:00",
+        "type": "magento2-module",
+        "installation-source": "dist",
+        "autoload": {
+            "files": [
+                "registration.php"
+            ],
+            "psr-4": {
+                "Stripeofficial\\InstantCheckout\\": ""
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "OSL-3.0",
+            "AFL-3.0"
+        ],
+        "description": "Stripe Instant Checkout payment method integration"
+    },
+    {
+        "name": "stripeofficial/module-przelewy",
+        "version": "2.0.2",
+        "version_normalized": "2.0.2.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/vphat28/stripe-module-przelewy.git",
+            "reference": "98b68b1d5c054ebcda93629e557bdd3c26065b72"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/vphat28/stripe-module-przelewy/zipball/98b68b1d5c054ebcda93629e557bdd3c26065b72",
+            "reference": "98b68b1d5c054ebcda93629e557bdd3c26065b72",
+            "shasum": ""
+        },
+        "time": "2019-02-26T00:31:31+00:00",
+        "type": "magento2-module",
+        "installation-source": "dist",
+        "autoload": {
+            "files": [
+                "registration.php"
+            ],
+            "psr-4": {
+                "Stripeofficial\\Przelewy\\": ""
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "OSL-3.0",
+            "AFL-3.0"
+        ],
+        "description": "Stripe Przelewy payment method integration"
+    },
+    {
+        "name": "stripeofficial/module-sepa",
+        "version": "1.0.4",
+        "version_normalized": "1.0.4.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/vphat28/stripe-module-sepa.git",
+            "reference": "ba5bd04f9443a380fc076a6ad6fed5b5a9b6565f"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/vphat28/stripe-module-sepa/zipball/ba5bd04f9443a380fc076a6ad6fed5b5a9b6565f",
+            "reference": "ba5bd04f9443a380fc076a6ad6fed5b5a9b6565f",
+            "shasum": ""
+        },
+        "time": "2019-02-26T00:20:29+00:00",
+        "type": "magento2-module",
+        "installation-source": "dist",
+        "autoload": {
+            "files": [
+                "registration.php"
+            ],
+            "psr-4": {
+                "Stripeofficial\\SEPA\\": ""
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "OSL-3.0",
+            "AFL-3.0"
+        ],
+        "description": "Stripe SEPA payment gateway integration"
+    },
+    {
+        "name": "stripeofficial/module-sofort",
+        "version": "1.0.4",
+        "version_normalized": "1.0.4.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/vphat28/stripe-module-sofort.git",
+            "reference": "108ce9eb61c7077c6a82aa7da944362da7906cb5"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/vphat28/stripe-module-sofort/zipball/108ce9eb61c7077c6a82aa7da944362da7906cb5",
+            "reference": "108ce9eb61c7077c6a82aa7da944362da7906cb5",
+            "shasum": ""
+        },
+        "time": "2019-02-26T00:32:09+00:00",
+        "type": "magento2-module",
+        "installation-source": "dist",
+        "autoload": {
+            "files": [
+                "registration.php"
+            ],
+            "psr-4": {
+                "Stripeofficial\\SOFORT\\": ""
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "OSL-3.0",
+            "AFL-3.0"
+        ],
+        "description": "Stripe SOFORT payment method integration"
+    },
+    {
+        "name": "stripeofficial/stripe-payments",
+        "version": "2.0.9",
+        "version_normalized": "2.0.9.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/vphat28/stripe-payments.git",
+            "reference": "e371383ad6336c167a2b5028a57be9f80f02ea54"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/vphat28/stripe-payments/zipball/e371383ad6336c167a2b5028a57be9f80f02ea54",
+            "reference": "e371383ad6336c167a2b5028a57be9f80f02ea54",
+            "shasum": ""
+        },
+        "require": {
+            "stripeofficial/module-alipay": ">=1.0.4",
+            "stripeofficial/module-bancontact": ">=1.0.4",
+            "stripeofficial/module-core": ">=2.0.5",
+            "stripeofficial/module-creditcards": ">=1.0.12",
+            "stripeofficial/module-giropay": ">=1.0.4",
+            "stripeofficial/module-ideal": ">=1.0.4",
+            "stripeofficial/module-instant-checkout": ">=1.0.9",
+            "stripeofficial/module-przelewy": ">=2.0.2",
+            "stripeofficial/module-sepa": ">=1.0.4",
+            "stripeofficial/module-sofort": ">=1.0.4"
+        },
+        "time": "2019-02-26T00:38:39+00:00",
+        "type": "metapackage",
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "OSL-3.0",
+            "AFL-3.0"
+        ],
+        "description": "Stripe Payment Methods suite"
+    }
+]

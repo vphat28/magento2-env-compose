@@ -1,0 +1,46 @@
+<?php
+
+/** @var Magento\Sales\Model\Order $order */
+$order = $block->getOrderData();
+
+$shippingAddress = @$order->getShippingAddress();
+$total = $order->getBaseGrandTotal();
+$billingAddress = $order->getBillingAddress();
+$shippingAddressArr = [];
+
+if ($shippingAddress != null) {
+    $shippingAddressArr = @$shippingAddress->toArray();
+}
+
+$billingAddressArr = $billingAddress->toArray();
+$paymentMethod = $order->getPayment();
+
+?>
+<h3><?php echo $block->escapeHtml(__('Order Information')); ?></h3>
+<p>
+    <b><?php echo $block->escapeHtml(__('Grand Total')); ?></b><br>
+    <?php echo $block->escapeHtml($block->formatPrice($total, $order->getStore(), $order->getBaseCurrency())); ?>
+</p>
+<?php if (!empty($shippingAddressArr)) { ?>
+<p>
+    <b><?php echo $block->escapeHtml(__('Shipping Address')); ?></b><br>
+    <?php echo $block->escapeHtml(empty(@$shippingAddressArr['street']) ? '' : $shippingAddressArr['street']); ?>
+    <?php echo $block->escapeHtml(empty(@$shippingAddressArr['city']) ? '' : ', ' . $shippingAddressArr['city']); ?>
+    <?php echo $block->escapeHtml(empty(@$shippingAddressArr['region']) ? '' : ', ' . $shippingAddressArr['region']); ?>
+    <?php echo $block->escapeHtml(empty(@$shippingAddressArr['region']) ? '' : ', ' . $shippingAddressArr['postcode']); ?>
+    <?php echo $block->escapeHtml(empty(@$shippingAddressArr['country_id']) ? '' : ', ' . $shippingAddressArr['country_id']); ?>
+</p>
+<?php } ?>
+<p>
+    <b><?php echo $block->escapeHtml(__('Billing Address')); ?></b><br>
+    <?php echo $block->escapeHtml(empty($billingAddressArr['street']) ? '' : $billingAddressArr['street']); ?>
+    <?php echo $block->escapeHtml(empty($billingAddressArr['city']) ? '' : ', ' . $billingAddressArr['city']); ?>
+    <?php echo $block->escapeHtml(empty($billingAddressArr['region']) ? '' : ', ' . $billingAddressArr['region']); ?>
+    <?php echo $block->escapeHtml(empty($billingAddressArr['region']) ? '' : ', ' . $billingAddressArr['postcode']); ?>
+    <?php echo $block->escapeHtml(empty($billingAddressArr['country_id']) ? '' : ', ' . $billingAddressArr['country_id']); ?>
+</p>
+
+<p>
+    <b><?php echo $block->escapeHtml(__('Payment Method')); ?></b><br>
+    <?php echo $block->escapeHtml($paymentMethod->getData()['additional_information']['method_title']); ?>
+</p>

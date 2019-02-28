@@ -1,0 +1,56 @@
+<div id='stripe_cc' class="payment-method" data-bind="css: {'_active': (getCode() == isChecked())}">
+    <div class="payment-method-title field choice">
+        <label class="label" data-bind="attr: {'for': getCode()}">
+            <ul class="credit-card-types" style="display: inline-block;vertical-align: middle;">
+                <!-- ko foreach: {data: getCcAvailableTypesValues(), as: 'item'} -->
+                <li class="item" data-bind="css: {_active: true} ">
+                    <!--ko if: $parent.getIcons(item.value) -->
+                    <img data-bind="attr: {
+                            'src': $parent.getIcons(item.value).url,
+                            'alt': item.type,
+                            'width': $parent.getIcons(item.value).width,
+                            'height': $parent.getIcons(item.value).height
+                            }">
+                    <!--/ko-->
+                </li>
+                <!--/ko-->
+            </ul>
+        </label>
+    </div>
+    <div class="payment-method-content-multishipping">
+        <!-- ko foreach: getRegion('messages') -->
+        <!-- ko template: getTemplate() --><!-- /ko -->
+        <!--/ko-->
+
+        <div id="stripecreditcards-payment-form"
+              data-bind="afterRender: stripeInit()">
+
+            <div class="form-row">
+                <label for="stripe-card-element">
+                    Credit or debit card
+                </label>
+
+                <div id="stripe-card-element">
+                    <!-- a Stripe Element will be inserted here. -->
+                </div>
+
+                <!-- Used to display Element errors -->
+                <div id="stripe-card-errors" role="alert"></div>
+            </div>
+        </div>
+
+        <br>
+
+        <div class="actions-toolbar">
+            <div data-bind="if: getconfigEnable3ds()" style="float: left;">
+                <img class="_3ds-badges" data-bind="attr:{src: imageVisaPath()}, click: openVisaModal">
+                <img class="_3ds-badges" data-bind="attr:{src: imageMasterCardPath()}, click: openMasterCardModal">
+                <template data></template>
+            </div>
+        </div>
+    </div>
+    <input type="hidden" name="payment[additional_data][stripeToken]" id="stripecards-input-hidden-stripeToken" value="">
+    <input type="hidden" name="payment[additional_data][currencyCode]" id="stripecards-input-hidden-currencyCode" value="">
+    <input type="hidden" name="payment[additional_data][customerEmail]" id="stripecards-input-hidden-customerEmail" value="">
+    <input type="hidden" name="payment[additional_data][stripeCard3ds]" id="stripecards-input-hidden-stripeCard3ds" value="">
+</div>

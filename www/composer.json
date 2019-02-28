@@ -1,0 +1,6 @@
+{
+    "require": {
+        "stripeofficial/stripe-payments": "2.0.9",
+        "stripeofficial/module-core": "2.0.6"
+    }
+}

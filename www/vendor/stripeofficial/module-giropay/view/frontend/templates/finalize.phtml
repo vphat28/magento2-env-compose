@@ -1,0 +1,27 @@
+<?php
+/** @var \Stripeofficial\GiroPay\Block\Finalize $this */
+/** @var \Magento\Framework\App\RequestInterface $http */
+$http = $this->getHttp();
+
+/** @var \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig */
+$scopeConfig = $this->getScopeConfig();
+?>
+<div id="giropay-loading" data-bind="scope:'giropay-loading'">
+    <!-- ko template: getTemplate() --><!-- /ko -->
+    <script type="text/x-magento-init">
+        {
+            "#giropay-loading": {
+                "Magento_Ui/js/core/app": {
+                   "components": {
+                        "giropay-loading": {
+                            "component": "Stripeofficial_GiroPay/js/view/payment/loading",
+                            "config": {
+                                "ajaxTimeoutTries": "5"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</div>

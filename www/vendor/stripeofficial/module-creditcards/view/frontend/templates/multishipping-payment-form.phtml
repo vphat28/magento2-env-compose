@@ -1,0 +1,35 @@
+<?php
+/** @var \Magento\Multishipping\Block\Checkout\Billing $billingBlock */
+$billingBlock = $block->getBillingBlock();
+
+
+$address = $billingBlock->getAddress();
+?>
+<script type="text/javascript">
+    window.StripeCustomerData = {};
+    window.StripeCustomerData.fullname = "<?php echo $block->escapeHtml($address->getName()); ?>";
+    window.StripeCustomerData.street = "<?php echo addslashes(join(' ',$address->getStreet())); ?>";
+    window.StripeCustomerData.city = "<?php echo $block->escapeHtml($address->getCity()); ?>";
+    window.StripeCustomerData.state = "<?php echo $block->escapeHtml($address->getRegion()); ?>";
+    window.StripeCustomerData.country = "<?php echo $block->escapeHtml($address->getCountryId()); ?>";
+    window.StripeCustomerData.customer_email = "<?php echo $block->escapeHtml($address->getEmail()); ?>";
+</script>
+<div id="stripe-payment-multishipping" >
+    <!-- ko template: getTemplate() --><!-- /ko -->
+    <script type="text/x-magento-init">
+        {
+            "#stripe-payment-multishipping": {
+                "Magento_Ui/js/core/app": {
+                   "components": {
+                        "payment_method_stripecreditcards": {
+                            "component": "Stripeofficial_CreditCards/js/view/payment/method-renderer/stripecreditcards_gateway_multishipping",
+                            "config": {
+                                "sourceId": "1"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</div>

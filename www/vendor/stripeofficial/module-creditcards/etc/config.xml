@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <payment>
+            <stripecreditcards_vault>
+                <model>StripeCreditCardVaultFacade</model>
+                <title>Stored Cards (Stripe)</title>
+            </stripecreditcards_vault>
+            <stripecreditcards>
+                <debug>1</debug>
+                <active>0</active>
+                <model>Stripeofficial\CreditCards\Model\Adapter</model>
+                <order_status>pending_payment</order_status>
+                <payment_action>authorize</payment_action>
+                <title>Stripe Cards (Credit and Debit)</title>
+                <currency>USD</currency>
+                <can_authorize>1</can_authorize>
+                <can_capture>1</can_capture>
+                <can_capture_partial>0</can_capture_partial>
+                <can_void>1</can_void>
+                <can_cancel>1</can_cancel>
+                <can_refund_partial_per_invoice>1</can_refund_partial_per_invoice>
+                <can_refund>1</can_refund>
+                <can_authorize_vault>1</can_authorize_vault>
+                <can_capture_vault>1</can_capture_vault>
+                <can_review_payment>1</can_review_payment>
+                <can_use_checkout>1</can_use_checkout>
+                <is_gateway>1</is_gateway>
+                <cctypes>VI,MC,AE,DI,JCB,CUP</cctypes>
+                <sort_order>1</sort_order>
+                <ajax_timeout>5</ajax_timeout>
+                <form_font_size>16px</form_font_size>
+                <form_font_color>#333333</form_font_color>
+                <debugReplaceKeys>MERCHANT_KEY</debugReplaceKeys>
+                <paymentInfoKeys>FRAUD_MSG_LIST</paymentInfoKeys>
+                <privateInfoKeys>FRAUD_MSG_LIST</privateInfoKeys>
+            </stripecreditcards>
+        </payment>
+    </default>
+</config>
