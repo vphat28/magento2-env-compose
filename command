@@ -34,7 +34,7 @@ pecl install xdebug-2.6.0 \
 docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
     && docker-php-ext-install -j$(nproc) gd
 
-docker run --name mysql --network=charper -v $PWD/mysql-data:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=root  mysql:5.7 
+docker run -d --name mysql --network=charper -v $PWD/mysql-data:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=root  mysql:5.7 
 
 
 docker run --name composer --interactive --tty     --volume $PWD:/app     --volume $COMPOSER_HOME:/tmp     composer require stripe/stripe-php
