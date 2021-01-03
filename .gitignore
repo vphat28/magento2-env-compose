@@ -1,2 +1,4 @@
-mysql-data
+
 www/projects
+mysql-data/*
+!mysql-data/blank
