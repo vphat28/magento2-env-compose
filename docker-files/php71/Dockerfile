@@ -1,4 +1,4 @@
-FROM php:7.2-fpm
+FROM php:7.1-fpm
 RUN apt-get update -y && apt-get install -y sendmail libpng-dev 
 RUN apt-get install libxslt-dev -y
 RUN apt-get install libzip-dev -y
