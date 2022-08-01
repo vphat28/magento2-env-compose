@@ -40,7 +40,8 @@ services:
     depends_on:
       - mysql
     environment:
-      XDEBUG_CONFIG: "remote_host=$REMOTE_HOST_IP remote_enable=on remote_autostart=on remote_port=9300 force_display_errors=on"
+      XDEBUG_CONFIG: "client_host=host.docker.internal discover_client_host=on remote_enable=on remote_autostart=on remote_port=9300 client_port=9300 mode=debug force_display_errors=on start_with_request=yes"
+      XDEBUG_MODE: "debug"
   nginx:
     image: nginx
     volumes:
