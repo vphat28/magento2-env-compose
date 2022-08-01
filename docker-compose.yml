@@ -27,11 +27,20 @@ version: '3.7'
 services:
   php73:
     image: vphat28/php73
-    build: ./docker-files/php73
     volumes:
       - ./www:/var/www/html
     depends_on:
       - mysql
+    environment:
+      XDEBUG_CONFIG: "remote_host=host.docker.internal remote_enable=on remote_autostart=on remote_port=9300 force_display_errors=on"
+  php73debug:
+    image: vphat28/php73debug
+    volumes:
+      - ./www:/var/www/html
+    depends_on:
+      - mysql
+    environment:
+      XDEBUG_CONFIG: "remote_host=$REMOTE_HOST_IP remote_enable=on remote_autostart=on remote_port=9300 force_display_errors=on"
   nginx:
     image: nginx
     volumes:
