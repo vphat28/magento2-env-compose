@@ -25,22 +25,22 @@ version: '3.7'
 #  DATABASE_URL: mongodb://db:27017/vapor_database{{/db.is_mongo}}{{/fluent}}
   
 services:
-  php73:
-    image: vphat28/php73
+  php:
+    image: vphat28/php80
     volumes:
       - ./www:/var/www/html
     depends_on:
       - mysql
     environment:
       XDEBUG_CONFIG: "remote_host=host.docker.internal remote_enable=on remote_autostart=on remote_port=9300 force_display_errors=on"
-  php73debug:
-    image: vphat28/php73debug
+  phpdebug:
+    image: vphat28/php80debug
     volumes:
       - ./www:/var/www/html
     depends_on:
       - mysql
     environment:
-      XDEBUG_CONFIG: "client_host=host.docker.internal discover_client_host=on remote_enable=on remote_autostart=on remote_port=9300 client_port=9300 mode=debug force_display_errors=on start_with_request=yes"
+      XDEBUG_CONFIG: "client_host=xdebug://gateway discover_client_host=on remote_enable=on remote_autostart=on remote_port=9300 client_port=9300 mode=debug force_display_errors=on start_with_request=yes"
       XDEBUG_MODE: "debug"
   nginx:
     image: nginx

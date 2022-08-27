@@ -16,7 +16,7 @@ RUN apt-get install libxslt-dev -y
 RUN apt-get install libmcrypt-dev -y
 RUN apt-get install git -y
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg
-RUN docker-php-ext-install gd pdo pdo_mysql zip xsl intl soap bcmath   
+RUN docker-php-ext-install gd pdo mysqli pdo_mysql zip xsl intl soap bcmath   
 RUN php -i
     
     
