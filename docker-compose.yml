@@ -16,17 +16,17 @@
 #
 version: '3.7'
 
-#x-shared_environment: &shared_environment
-#  LOG_LEVEL: ${LOG_LEVEL:-debug}{{#fluent}}{{^db.is_sqlite}}{{^db.is_mongo}}
-#  DATABASE_HOST: db
-#  DATABASE_NAME: vapor_database
-#  DATABASE_USERNAME: vapor_username
-#  DATABASE_PASSWORD: vapor_password{{/db.is_mongo}}{{/db.is_sqlite}}{{#db.is_mongo}}
+  #x-shared_environment: &shared_environment
+  #  LOG_LEVEL: ${LOG_LEVEL:-debug}{{#fluent}}{{^db.is_sqlite}}{{^db.is_mongo}}
+  #  DATABASE_HOST: db
+  #  DATABASE_NAME: vapor_database
+  #  DATABASE_USERNAME: vapor_username
+  #  DATABASE_PASSWORD: vapor_password{{/db.is_mongo}}{{/db.is_sqlite}}{{#db.is_mongo}}
 #  DATABASE_URL: mongodb://db:27017/vapor_database{{/db.is_mongo}}{{/fluent}}
-  
+
 services:
   php:
-    image: vphat28/php80
+    image: vphat28/php74
     volumes:
       - ./www:/var/www/html
     depends_on:
@@ -34,14 +34,27 @@ services:
     environment:
       XDEBUG_CONFIG: "remote_host=host.docker.internal remote_enable=on remote_autostart=on remote_port=9300 force_display_errors=on"
   phpdebug:
-    image: vphat28/php80debug
+    image: vphat28/php74debug
     volumes:
       - ./www:/var/www/html
     depends_on:
       - mysql
     environment:
-      XDEBUG_CONFIG: "client_host=xdebug://gateway discover_client_host=on remote_enable=on remote_autostart=on remote_port=9300 client_port=9300 mode=debug force_display_errors=on start_with_request=yes"
+      XDEBUG_CONFIG: "client_host=192.168.1.18 remote_host=192.168.1.18 discover_client_host=on remote_enable=on remote_autostart=on remote_port=9300 client_port=9300 mode=debug force_display_errors=on start_with_request=yes"
       XDEBUG_MODE: "debug"
+  elasticsearch:
+    image: elasticsearch:7.17.6
+    environment:
+      - cluster.name=docker-cluster
+      - discovery.type=single-node
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    ports:
+      - 9200:9200
   nginx:
     image: nginx
     volumes:
@@ -51,6 +64,7 @@ services:
       - php
     ports:
       - '80:80'
+      - '443:443'
   mailhog:
     image: mailhog/mailhog
     ports:
@@ -61,6 +75,5 @@ services:
       - ./mysql-data:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: root
-      
-    
-    
+    ports:
+      - '3306:3306'
