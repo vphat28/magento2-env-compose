@@ -42,6 +42,12 @@ services:
     environment:
       XDEBUG_CONFIG: "client_host=192.168.1.18 remote_host=192.168.1.18 discover_client_host=on remote_enable=on remote_autostart=on remote_port=9300 client_port=9300 mode=debug force_display_errors=on start_with_request=yes"
       XDEBUG_MODE: "debug"
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.17.6
+    ports:
+      - 5601:5601
+    depends_on:
+      - elasticsearch  
   elasticsearch:
     image: elasticsearch:7.17.6
     environment:
@@ -77,3 +83,11 @@ services:
       MYSQL_ROOT_PASSWORD: root
     ports:
       - '3306:3306'
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    ports:
+        - 5672:5672
+        - 15672:15672
+    environment:
+      RABBITMQ_DEFAULT_USER: "admin"
+      RABBITMQ_DEFAULT_PASS: "password"    
