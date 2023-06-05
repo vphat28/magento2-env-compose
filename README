@@ -1,1 +1,5 @@
 Delete the blank file in mysql-data folder before using
+
+
+To generate ssl cert on localhost
+https://github.com/socketry/localhost
