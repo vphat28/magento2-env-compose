@@ -81,6 +81,7 @@ services:
       - ./mysql-data:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: root
+    command: mysqld --innodb-buffer-pool-size=256M  
     ports:
       - '3306:3306'
   rabbitmq:
