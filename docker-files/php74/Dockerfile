@@ -25,4 +25,5 @@ RUN docker-php-ext-install gd pdo mysqli pdo_mysql zip xsl intl soap bcmath
 RUN chmod 775 /usr/local/bin/composer
 RUN mkdir /var/www/.composer
 RUN chmod 777 /var/www/.composer
+RUN docker-php-ext-install sockets
 RUN php -i
