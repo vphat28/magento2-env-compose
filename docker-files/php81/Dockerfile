@@ -13,10 +13,14 @@ RUN apt-get install -y \
 	&& docker-php-ext-enable imagick
 RUN apt-get update -y && apt-get install -y sendmail libpng-dev 
 RUN apt-get install libxslt-dev -y
+RUN apt-get install cron -y
 RUN apt-get install libmcrypt-dev -y
 RUN apt-get install git -y
+RUN apt-get install default-mysql-client -y
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg
-RUN docker-php-ext-install gd pdo pdo_mysql zip xsl intl soap bcmath   
+RUN docker-php-ext-install gd pdo mysqli pdo_mysql zip xsl intl soap bcmath   
+RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+RUN php composer-setup.php
+RUN mv composer.phar /usr/local/bin/composer
+RUN docker-php-ext-install sockets
 RUN php -i
-    
-    
