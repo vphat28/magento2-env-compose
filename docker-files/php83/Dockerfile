@@ -1,4 +1,4 @@
-FROM php:7.4-fpm
+FROM php:8.3-fpm
 RUN apt-get update && apt-get install -y libfreetype6-dev  libjpeg62-turbo-dev libpng-dev \
 	&& docker-php-ext-configure gd \
 	&& docker-php-ext-install gd 
@@ -16,10 +16,8 @@ RUN apt-get install libxslt-dev -y
 RUN apt-get install cron -y
 RUN apt-get install libmcrypt-dev -y
 RUN apt-get install git -y
-RUN apt-get update && apt install mariadb-client -y
+RUN apt-get install default-mysql-client -y
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg
 RUN docker-php-ext-install gd pdo mysqli pdo_mysql zip xsl intl soap bcmath   
-RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
-RUN php composer-setup.php
-RUN docker-php-ext-install sockets
+RUN service cron start
 RUN php -i
