@@ -23,8 +23,10 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
 RUN php composer-setup.php
 RUN mv composer.phar /usr/local/bin/composer
 RUN docker-php-ext-install sockets
+
 RUN chmod 775 /usr/local/bin/composer
 RUN mkdir /var/www/.composer
 RUN chmod 777 /var/www/.composer
 RUN service cron start
+
 RUN php -i
